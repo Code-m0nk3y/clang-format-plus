@@ -177,6 +177,14 @@ def main():
       changed_lines.pop(ef)
       if opts.verbose >= 1:
         print('Ignoring file: %s' % ef)
+    elif '*' in ef:
+      part_match = ef.split('*')[0]
+      print('Ignoring dir: %s' % part_match)
+      for k in list(changed_lines.keys()):
+        if k.startswith(part_match):
+          changed_lines.pop(k)
+          if opts.verbose >= 1:
+            print('Ignoring file: %s' % k)
 
   if opts.verbose >= 1:
     ignored_files.difference_update(changed_lines)
